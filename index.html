@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Document</title>
+    <link rel="stylesheet" href="Styles.css">
+</head>
+<body>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+
+    :root {
+        --primario: #ff5e3a;
+        --primario-sombra: #37d7ff;
+        --secundario: #00b4d8;
+        --secundario-sombra: #0077b6;
+        --amarillo: #ffbe0b;
+        --fondo: #f0f4f8;
+        --blanco: #ffffff;
+        --texto: #2b2d42;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Nunito', sans-serif;
+    }
+
+    body {
+        display: flex;
+        min-height: 100vh;
+        background: radial-gradient(circle at top right, #fff3ef, var(--fondo));
+        color: var(--texto);
+        overflow-x: hidden;
+    }
+
+    /* --- BARRA LATERAL --- */
+    #ml.card {
+        width: 270px;
+        background: var(--blanco);
+        border-right: 3px solid #e2e8f0;
+        padding: 25px 20px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 6px 0 25px rgba(0, 0, 0, 0.04);
+        z-index: 10;
+    }
+
+    /* Logo animado */
+    .lb {
+        display: block;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.1rem;
+        font-weight: 900;
+        letter-spacing: 1px;
+        background: linear-gradient(45deg, var(--primario), #ff2a6d, var(--amarillo));
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        cursor: pointer;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        animation: brilloLogo 4s linear infinite;
+    }
+
+    .lb:hover {
+        transform: scale(1.08) rotate(-2deg);
+    }
+
+    @keyframes brilloLogo {
+        to { background-position: 200% center; }
+    }
+
+    /* --- BOTONES LATERALES ESTILO 3D PRESIONABLE --- */
+    .container ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .container .li a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: var(--texto);
+        font-weight: 800;
+        font-size: 1.05rem;
+        padding: 13px 18px;
+        border-radius: 16px;
+        background-color: #f8fafc;
+        border: 2px solid #e2e8f0;
+        box-shadow: 0 4px 0 #cbd5e1;
+        transition: all 0.15s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Iconos automáticos según el orden sin tocar tu HTML */
+    .container .li:nth-child(1) a::before { content: "🦉"; font-size: 1.3rem; }
+    .container .li:nth-child(2) a::before { content: "🔤"; font-size: 1.3rem; }
+    .container .li:nth-child(3) a::before { content: "🗣️"; font-size: 1.3rem; }
+    .container .li:nth-child(4) a::before { content: "🎮"; font-size: 1.3rem; }
+    .container .li:nth-child(5) a::before { content: "👤"; font-size: 1.3rem; }
+    .container .li:nth-child(6) a::before { content: "🚪"; font-size: 1.3rem; }
+
+    /* Hover vibrante */
+    .container .li a:hover {
+        background-color: #fff5f2;
+        border-color: var(--primario);
+        box-shadow: 0 4px 0 var(--primario);
+        color: var(--primario);
+        transform: translateY(-2px);
+    }
+
+    /* Efecto de botón físico al hacer clic */
+    .container .li a:active {
+        transform: translateY(3px);
+        box-shadow: 0 1px 0 var(--primario-sombra);
+    }
+
+    /* Estado Activo (marcado con JS) */
+    .container .li a.activo {
+        background-color: var(--primario);
+        color: var(--blanco);
+        border-color: var(--primario-sombra);
+        box-shadow: 0 4px 0 var(--primario-sombra);
+    }
+
+    /* Botón Cerrar Sesión */
+    .container .li:last-child {
+        margin-top: 25px;
+        padding-top: 15px;
+        border-top: 2px dashed #cbd5e1;
+    }
+
+    .container .li:last-child a {
+        color: #e63946;
+    }
+
+    .container .li:last-child a:hover {
+        background-color: #ffe5e8;
+        border-color: #e63946;
+        box-shadow: 0 4px 0 #e63946;
+    }
+
+    /* --- CONTENIDO Y MENÚ SUPERIOR --- */
+    .main-content {
+        flex: 1;
+        padding: 25px 40px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menu_superior {
+        background: var(--blanco);
+        padding: 14px 25px;
+        border-radius: 22px;
+        border: 2px solid #e2e8f0;
+        box-shadow: 0 6px 0 #e2e8f0;
+        margin-bottom: 30px;
+    }
+
+    .menu_superior ul {
+        list-style: none;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .menu_superior ul li a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        color: var(--texto);
+        font-weight: 800;
+        font-size: 1rem;
+        padding: 10px 20px;
+        border-radius: 50px;
+        transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Emojis automáticos en el menú superior */
+    .menu_superior ul li:nth-child(1) a::before { content: "🏠"; }
+    .menu_superior ul li:nth-child(2) a::before { content: "🗺️"; }
+    .menu_superior ul li:nth-child(3) a::before { content: "🎭"; }
+    .menu_superior ul li:nth-child(4) a::before { content: "🌮"; }
+
+    .menu_superior ul li a:hover {
+        background-color: #e0f7fa;
+        color: var(--secundario-sombra);
+        transform: scale(1.08);
+    }
+
+    .menu_superior ul li a.activo-top {
+        background-color: var(--secundario);
+        color: var(--blanco);
+        box-shadow: 0 4px 0 var(--secundario-sombra);
+        transform: scale(1.05);
+    }
+
+    /* Notificación flotante interactiva */
+    #toast-otomi {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        background: var(--texto);
+        color: var(--blanco);
+        padding: 14px 22px;
+        border-radius: 16px;
+        font-weight: 800;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 100;
+    }
+
+    #toast-otomi.mostrar {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+        body { flex-direction: column; }
+        #ml.card { width: 100%; border-right: none; border-bottom: 3px solid #e2e8f0; padding: 15px; }
+        .container ul { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+        .container .li:last-child { margin-top: 0; border-top: none; padding-top: 0; }
+        .main-content { padding: 20px; }
+    }
+</style>
+
+<!-- Mensaje emergente interactivo -->
+<div id="toast-otomi"></div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const linksLaterales = document.querySelectorAll(".container .li a");
+        const linksSuperiores = document.querySelectorAll(".menu_superior ul li a");
+        const toast = document.getElementById("toast-otomi");
+        let timer;
+
+        function mostrarAviso(texto) {
+            toast.textContent = texto;
+            toast.classList.add("mostrar");
+            clearTimeout(timer);
+            timer = setTimeout(() => toast.classList.remove("mostrar"), 2500);
+        }
+
+        // Interactividad menú lateral
+        linksLaterales.forEach(link => {
+            link.addEventListener("click", (e) => {
+                linksLaterales.forEach(l => l.classList.remove("activo"));
+                link.classList.add("activo");
+
+                // Si el enlace lleva a PROXIMO.html o está vacío, avisa sin recargar
+                if (link.getAttribute("href") === "PROXIMO.html" || link.getAttribute("href") === "") {
+                    e.preventDefault();
+                    mostrarAviso("🚀 ¡Sección '" + link.textContent.trim() + "' próximamente!");
+                }
+            });
+        });
+
+        // Interactividad menú superior
+        linksSuperiores.forEach(link => {
+            link.addEventListener("click", () => {
+                linksSuperiores.forEach(l => l.classList.remove("activo-top"));
+                link.classList.add("activo-top");
+                mostrarAviso("✨ Explorando: " + link.textContent.trim());
+            });
+        });
+    });
+    </script>
+    
+    <div id="ml" class="card">
+        <div class="cs">
+            <label class="lb">
+                <strong>
+                    OtominGO
+                </strong>
+            </label>
+            <nav class="container">
+                <ul>
+                    <li class="li"><a href="unidad_animales.html">Aprender</a></li>
+                    <li class="li"><a href="PROXIMO.html">Vocales</a></li>
+                    <li class="li"><a href="PROXIMO.html">Consonantes</a></li>
+                    <li class="li"><a href="PROXIMO.html">Juegos</a></li>
+                    <li class="li"><a href="perfil.html">Perfl</a></li>
+                    <li class="li"><a href="">Cerrar Sesion</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <main class="main-content">
+    <nav class="menu_superior">
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#lugares">Lugares para visitar</a></li>
+                <li><a href="#tradiciones">Tradiciones</a></li>
+                <li><a href="#comida">Comida</a></li>
+            </ul>
+    </nav>
+
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Progreso de usuarios</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 32px 16px;
+            background: #f4f7fb;
+            color: #263445;
+            font-family: Arial, sans-serif;
+        }
+
+
+        h1 {
+            margin: 0 0 24px;
+            color: #263445;
+            text-align: center;
+        }
+
+
+        .boton-inicio {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            background: #0876bd;
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+
+
+        .boton-inicio:hover {
+            background: #065d96;
+        }
+
+
+        .boton-inicio:focus-visible {
+            outline: 3px solid #263445;
+            outline-offset: 3px;
+        }
+
+
+        #contenedor {
+            width: min(100%, 720px);
+            margin: 0 auto;
+        }
+
+
+        .perfil-card {
+            padding: 28px;
+            background: #fff;
+            border: 1px solid #e5eaf0;
+            border-radius: 18px;
+            box-shadow: 0 8px 24px rgba(38, 52, 69, 0.08);
+        }
+
+
+        .foto-perfil-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+
+        .foto-perfil {
+            width: 112px;
+            height: 112px;
+            border: 4px solid #e6f4ff;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+
+        .perfil-card h2 {
+            margin: 0 0 18px;
+            color: #263445;
+            text-align: center;
+        }
+
+
+        .datos-perfil,
+        .detalles-progreso {
+            color: #526174;
+        }
+
+
+        .datos-perfil p,
+        .detalles-progreso p {
+            margin: 8px 0;
+            overflow-wrap: anywhere;
+        }
+
+
+        .titulo-progreso {
+            margin: 28px 0 14px;
+            color: #263445;
+            font-size: 18px;
+        }
+
+
+        .estadisticas {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+
+        .estadistica {
+            display: flex;
+            min-height: 120px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 16px 10px;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+
+        .estadistica--porcentaje {
+            background: #e6f4ff;
+            color: #0876bd;
+        }
+
+
+        .estadistica--experiencia {
+            background: #f0eaff;
+            color: #7041bd;
+        }
+
+
+        .estadistica--racha {
+            background: #fff0df;
+            color: #c76a12;
+        }
+
+
+        .estadistica-label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+
+        .estadistica-valor {
+            font-size: 30px;
+            line-height: 1.1;
+        }
+
+
+        .estadistica-detalle {
+            font-size: 13px;
+        }
+
+
+        .detalles-progreso {
+            margin-top: 20px;
+            padding-top: 12px;
+            border-top: 1px solid #e5eaf0;
+        }
+
+
+        @media (max-width: 520px) {
+            .perfil-card {
+                padding: 20px 16px;
+            }
+
+
+            .estadisticas {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+
+            .estadistica {
+                min-height: 96px;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+
+
+<a class="boton-inicio" href="index.html">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+        <path d="M12 3 2.5 11h2.7v9h5.1v-5.8h3.4V20h5.1v-9h2.7L12 3z"/>
+    </svg>
+    <span>Volver al inicio</span>
+</a>
+
+
+<h1>Mi Perfil</h1>
+
+
+<div id="contenedor"></div>
+
+
+<script src="app.js"></script>
+
+
+</body>
+</html>

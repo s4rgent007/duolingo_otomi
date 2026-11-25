@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aprendiendo...</title>
+<link rel="stylesheet" href="estilo.css">
+
+</head>
+<body>
+    <header class="barra_superior">
+
+
+    <div class="contenedor_progreso">
+        <div class="avance_progreso">
+            <div class="relleno_progreso"></div>
+        </div>
+    </div>
+
+
+    <div class="caja_vidas">
+        <span class="icono_corazon">❤️</span>
+        <span id="contador_vidas">5</span>
+        <div class="caja_puntaje">
+    ⭐ <span id="puntaje">0</span>
+</div>
+    </div>
+
+
+</header>
+
+
+
+
+<!-- LECCIÓN 1 -->
+<section id="leccion1">
+
+
+
+
+<h3>Nueva palabra</h3>
+<h1>¿Cuál de estos es Mixtu?</h1>
+
+
+
+
+<div class="container">
+    <!-- Correcta -->
+    <div class="card" onclick="seleccionarRespuesta('Mixtu',this); reproducirAudio1()">
+        <img src="img/gato-negro.png">
+       
+    </div>
+    <!-- inCorrecta -->
+    <div class="card" onclick= "seleccionarRespuesta('Pato',this); reproducirAudio2()">
+         <img src="img/pato.png" >
+    </div>
+<!-- inCorrecta -->
+    <div class="card" onclick="seleccionarRespuesta('Burro',this);reproducirAudio3()">
+        <img src="img/burro.png">    
+    </div>
+</div>    
+
+
+<div class="botones">
+    <button class="comprobar" onclick="comprobar('Mixtu','mostrarleccion2')">
+        COMPROBAR
+    </button>
+    <button class="saltar" onclick="mostrarleccion2()">
+         SALTAR
+    </button>
+</div>
+</section>
+
+
+
+
+<!-- LECCIÓN 2 -->
+
+
+
+
+<section id="leccion2">
+
+
+
+
+<h3>Nueva palabra</h3>
+<h1>¿Cuál de estos es el Badu?</h1>
+
+
+
+
+<div class="container">
+
+
+
+
+       
+        <div class="card" onclick= "seleccionarRespuesta('Pato',this);reproducirAudio2()">
+            <img src="img/pato-de-goma.png">
+             
+        </div>
+
+
+
+
+        <div class="card" onclick="seleccionarRespuesta('Perro',this); reproducirAudio4()">
+            <img src="img/perro.png">
+        </div>
+
+
+        <div class="card" onclick="seleccionarRespuesta('Gato',this);reproducirAudio1()">
+            <img src="img/gato.png">
+        </div>
+</div>
+
+
+
+
+<div class="botones">
+        <button class="comprobar" onclick="comprobar('Pato','mostrarleccion3')">
+        COMPROBAR
+        </button>
+
+
+
+
+        <button class="saltar" onclick="mostrarleccion3()">
+        SALTAR
+        </button>
+</div>
+
+
+<p id="resultado2" class="resultado"></p>
+
+
+</section>
+
+
+<!-- LECCIÓN 3 -->
+
+
+
+
+<section id="leccion3">
+
+
+
+
+<h3>Nueva palabra</h3>
+<h1>¿Cuál de estos es un Juiji?</h1>
+<div class="container">
+<div class="card" onclick="seleccionarRespuesta('Burro',this);reproducirAudio3()">
+<img src="img/burro.png">
+</div>
+
+
+<div class="card" onclick="seleccionarRespuesta('Gato',this);reproducirAudio1()">
+<img src="img/gato.png">
+</div>
+
+
+<div class="card" onclick="seleccionarRespuesta('Pato',this);reproducirAudio2()">
+<img src="img/pato-de-goma.png">
+ </div>
+</div>
+
+
+<div class="botones">
+    <button class="comprobar"  
+        onclick="comprobar('Burro','mostrarleccion4')">
+    COMPROBAR
+    </button>
+    <button class="saltar" onclick="mostrarleccion4()">
+        SALTAR
+    </button>
+    </div>
+
+
+
+
+<p id="resultado2" class="resultado"></p>
+
+
+
+
+</section>
+
+
+<!-- LECCIÓN 4 -->
+
+
+
+
+<section id="leccion4">
+
+
+
+
+<h3>Completa la frase</h3>
+<h1>El ___ toma leche</h1>
+
+
+
+
+<div class="container">
+
+
+
+
+       
+        <div class="card" onclick="seleccionarRespuesta('Badu',this);reproducirAudio2()">
+        <h3> Badu</h3>
+        </div>
+
+
+
+
+        <div class="card" onclick="seleccionarRespuesta('Juiji',this);reproducirAudio3()">
+        <h3>Juiji</h3>
+        </div>
+
+
+
+
+        <div class="card" onclick="seleccionarRespuesta('Mixtu',this);reproducirAudio1()">
+        <h3>Mixtu</h3>
+        </div>
+</div>
+<div class="botones">
+    <button class="comprobar" onclick="comprobar('Mixtu','mostrarleccion5')">
+        COMPROBAR
+    </button>
+    <button class="saltar" onclick="mostrarleccion5()">
+        SALTAR
+    </button>
+</div>
+
+
+
+
+<p id="resultado2" class="resultado"></p>
+
+
+
+
+</section>
+<!-- LECCIÓN 5 -->
+
+
+
+
+<section id="leccion5">
+
+
+
+
+<h3>Completa la frase con la palabra en Otomi </h3>
+<h1>El ____ pone huevos</h1>
+
+
+
+
+<div class="container">
+<div class="card" onclick="seleccionarRespuesta('Badu',this);reproducirAudio2()">
+        <h3> Badu</h3>
+        </div>
+
+
+
+
+        <div class="card" onclick="seleccionarRespuesta('Juiji',this);reproducirAudio3()">
+        <h3>Juiji</h3>
+        </div>
+
+
+
+
+        <div class="card" onclick="seleccionarRespuesta('Gato',this);reproducirAudio1()">
+        <h3>Mixtu</h3>
+        </div>
+</div>
+
+
+<div class="botones">
+    <button class="comprobar"
+        onclick="comprobar('Badu','mostrarFinal')">
+    COMPROBAR
+    </button>
+    <button class="saltar">
+    SALTAR
+    </button>
+</div>
+
+
+<p id="resultado2" class="resultado"></p>
+
+
+</section>
+
+
+<audio id="audio1" src="audio/Gato.ogg"></audio>
+<audio id="audio2" src="audio/Pato.ogg"></audio>
+<audio id="audio3" src="audio/Burro.ogg"></audio>
+<audio id="audio4" src="audio/Perro.ogg"></audio>
+
+
+<script>
+
+
+// VARIABLES GLOBALES
+let puntaje = 0;
+let respuestaSeleccionada = "";
+
+
+// ACTUALIZAR PUNTAJE EN PANTALLA
+function actualizarPuntaje(){
+    document.getElementById("puntaje").textContent = puntaje;
+}
+
+
+// SELECCIONAR RESPUESTA
+function seleccionarRespuesta(respuesta, elemento){
+
+
+    respuestaSeleccionada = respuesta;
+
+
+    // Quitar selección anterior
+    const tarjetas = document.querySelectorAll(".card");
+    tarjetas.forEach(card => card.classList.remove("seleccionada"));
+
+
+    // Marcar tarjeta seleccionada
+    elemento.classList.add("seleccionada");
+}
+
+
+// VERIFICAR RESPUESTA
+function comprobar(correcta, siguienteFuncion){
+
+
+    if(respuestaSeleccionada === ""){
+        alert("Selecciona una respuesta primero");
+        return;
+    }
+
+
+    if(respuestaSeleccionada === correcta){
+
+
+        puntaje += 10;
+        actualizarPuntaje();
+
+
+        alert("✅ ¡Correcto! +10 puntos");
+
+
+    }else{
+
+
+        alert("❌ Incorrecto");
+
+
+    }
+
+
+    respuestaSeleccionada = "";
+
+
+    // avanzar a la siguiente lección
+    window[siguienteFuncion]();
+}
+
+
+// AUDIOS
+function reproducirAudio1(){
+    const audio = document.getElementById("audio1");
+    audio.currentTime = 0;
+    audio.play();
+}
+
+
+function reproducirAudio2(){
+    const audio = document.getElementById("audio2");
+    audio.currentTime = 0;
+    audio.play();
+}
+
+
+function reproducirAudio3(){
+    const audio = document.getElementById("audio3");
+    audio.currentTime = 0;
+    audio.play();
+}
+
+
+function reproducirAudio4(){
+    const audio = document.getElementById("audio4");
+    audio.currentTime = 0;
+    audio.play();
+}
+
+
+// NAVEGACIÓN
+function mostrarleccion2(){
+    document.getElementById("leccion1").style.display = "none";
+    document.getElementById("leccion2").style.display = "block";
+}
+
+
+function mostrarleccion3(){
+    document.getElementById("leccion2").style.display = "none";
+    document.getElementById("leccion3").style.display = "block";
+}
+
+
+function mostrarleccion4(){
+    document.getElementById("leccion3").style.display = "none";
+    document.getElementById("leccion4").style.display = "block";
+}
+
+
+function mostrarleccion5(){
+    document.getElementById("leccion4").style.display = "none";
+    document.getElementById("leccion5").style.display = "block";
+}
+
+
+// PANTALLA FINAL
+function mostrarFinal(){
+
+
+   fetch("actualizar_progreso.php", {
+
+
+        method: "POST",
+
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+
+        body: JSON.stringify({
+            experienciaGanada: puntaje
+        })
+
+
+    })
+    .then(response => response.json())
+    .then(data => {
+
+
+        if(data.success){
+
+
+            alert(
+                "🎉 ¡Felicidades!\n\n" +
+                "Ganaste " + puntaje +
+                " puntos de experiencia."
+            );
+
+
+            window.location.href = "index.html";
+
+
+        }else{
+
+
+            alert(data.mensaje);
+
+
+        }
+
+
+    })
+    .catch(error => {
+
+
+        console.error(error);
+        alert("Error al actualizar el progreso");
+
+
+    });
+
+
+
+
+
+
+}
+
+
+</script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+
+    :root {
+        --primario: #ff5e3a;
+        --verde-ok: #58cc02;
+        --verde-sombra: #46a302;
+        --rojo-error: #ff4b4b;
+        --rojo-sombra: #d33131;
+        --azul: #1cb0f6;
+        --fondo: #f4f7f6;
+        --blanco: #ffffff;
+        --texto: #2b2d42;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Nunito', sans-serif !important;
+    }
+
+    body {
+        min-height: 100vh;
+        background: radial-gradient(circle at top, #fff6f3, var(--fondo));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 20px;
+        color: var(--texto);
+    }
+
+    /* Etiqueta superior "PALABRA NUEVA" */
+    h3 {
+        background: linear-gradient(45deg, #ce82ff, #a560e8);
+        color: var(--blanco);
+        font-size: 0.9rem;
+        font-weight: 900;
+        letter-spacing: 1.5px;
+        padding: 8px 20px;
+        border-radius: 50px;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 12px rgba(165, 96, 232, 0.3);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    h3::before {
+        content: "✨";
+    }
+
+    /* Pregunta principal */
+    h1 {
+        font-size: 2.1rem;
+        font-weight: 900;
+        color: var(--texto);
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    /* Contenedor de tarjetas en fila */
+    .contenedor {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        gap: 25px;
+        flex-wrap: wrap;
+        max-width: 850px;
+        width: 100%;
+    }
+
+    /* Tarjetas interactivas estilo 3D */
+    .card {
+        background: var(--blanco);
+        border: 3px solid #e5e5e5;
+        box-shadow: 0 6px 0 #e5e5e5;
+        border-radius: 22px;
+        padding: 30px 25px;
+        width: 220px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        user-select: none;
+    }
+
+    /* Ocultar el <br> extra de la segunda tarjeta para alinear todas igual */
+    .card br {
+        display: none;
+    }
+
+    .card img {
+        width: 120px;
+        height: 120px;
+        object-fit: contain;
+        margin-bottom: 20px;
+        transition: transform 0.25s ease;
+    }
+
+    .card p {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: var(--texto);
+        background: #f8fafc;
+        width: 100%;
+        padding: 10px;
+        border-radius: 14px;
+        border: 2px solid #edf2f7;
+        transition: all 0.2s ease;
+    }
+
+    /* Efecto al pasar el mouse */
+    .card:hover {
+        border-color: var(--azul);
+        box-shadow: 0 8px 0 var(--azul);
+        transform: translateY(-6px);
+    }
+
+    .card:hover img {
+        transform: scale(1.12) rotate(3deg);
+    }
+
+    .card:hover p {
+        color: var(--azul);
+        border-color: #bae6fd;
+        background: #f0f9ff;
+    }
+
+    /* Efecto al presionar */
+    .card:active {
+        transform: translateY(3px);
+        box-shadow: 0 2px 0 var(--azul);
+    }
+
+    /* --- ESTADOS DE RESPUESTA (JS) --- */
+    .card.correcta {
+        background-color: #d7ffb8;
+        border-color: var(--verde-ok) !important;
+        box-shadow: 0 6px 0 var(--verde-sombra) !important;
+        animation: saltoAcierto 0.4s ease;
+    }
+
+    .card.correcta p {
+        background-color: var(--verde-ok);
+        color: var(--blanco);
+        border-color: var(--verde-sombra);
+    }
+
+    .card.incorrecta {
+        background-color: #ffdfe0;
+        border-color: var(--rojo-error) !important;
+        box-shadow: 0 6px 0 var(--rojo-sombra) !important;
+        animation: sacudidaError 0.4s ease;
+    }
+
+    .card.incorrecta p {
+        background-color: var(--rojo-error);
+        color: var(--blanco);
+        border-color: var(--rojo-sombra);
+    }
+
+    @keyframes saltoAcierto {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.08); }
+    }
+
+    @keyframes sacudidaError {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-8px); }
+        75% { transform: translateX(8px); }
+    }
+
+    /* Barra inferior de retroalimentación */
+    #barra-resultado {
+        margin-top: 35px;
+        padding: 16px 35px;
+        border-radius: 18px;
+        font-size: 1.2rem;
+        font-weight: 900;
+        opacity: 0;
+        transform: translateY(15px);
+        transition: all 0.3s ease;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #barra-resultado.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .msg-ok {
+        background: #d7ffb8;
+        color: var(--verde-sombra);
+        border: 2px solid var(--verde-ok);
+    }
+
+    .msg-error {
+        background: #ffdfe0;
+        color: var(--rojo-sombra);
+        border: 2px solid var(--rojo-error);
+    }
+
+    /* Adaptable a celular */
+    @media (max-width: 600px) {
+        h1 { font-size: 1.6rem; }
+        .card { width: 100%; max-width: 300px; flex-direction: row; padding: 15px 20px; }
+        .card img { width: 70px; height: 70px; margin-bottom: 0; margin-right: 15px; }
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const tarjetas = document.querySelectorAll(".card");
+        
+        // Crear barra de mensaje debajo del contenedor
+        const barra = document.createElement("div");
+        barra.id = "barra-resultado";
+        document.body.appendChild(barra);
+
+        tarjetas.forEach(card => {
+            card.addEventListener("click", () => {
+                // Limpiar estados anteriores
+                tarjetas.forEach(c => c.classList.remove("correcta", "incorrecta"));
+
+                const palabra = card.querySelector("p").textContent.trim().toLowerCase();
+
+                if (palabra === "mixto") {
+                    card.classList.add("correcta");
+                    barra.textContent = "🎉 ¡Excelente! 'Mixto' significa gato en otomí.";
+                    barra.className = "visible msg-ok";
+                } else {
+                    card.classList.add("incorrecta");
+                    barra.textContent = "❌ ¡Ups! Ese no es un gato. Inténtalo de nuevo.";
+                    barra.className = "visible msg-error";
+                }
+            });
+        });
+    });
+</script>
+<body>
+    <h3>PALABRA NUEVA</h3>
+    <h1>¿cual de estos es un "gato"?</h1>
+    <div class="contenedor">
+
+        <div class="card">
+        <img src="img/gato-negro.png" width="100px">
+        <p>Mixto</p>
+        </div>
+
+
+        <div class="card"> <br>
+            <img src="img/burro.png" width="100px">
+            <p>Juiji</p>
+        </div>
+
+        <div class="card">
+            <img src="img/pato.png" width="100px">
+            <p>Badu</p>
+        </div>
+
+    </div>
+</body>
+</html>

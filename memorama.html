@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otolingo 🦉 - Memorama con Imágenes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', sans-serif;
+        }
+
+
+
+
+        :root {
+            --verde: #58CC02;
+            --verde-oscuro: #46A302;
+            --azul: #2B70C9;
+            --azul-claro: #4E88D4;
+            --amarillo: #FFC800;
+            --rojo: #FF4B4B;
+            --gris: #E5E5E5;
+            --texto: #4B4B4B;
+            --fondo: #FAFAFA;
+        }
+
+
+
+
+        body {
+            background-color: var(--fondo);
+            color: var(--texto);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+
+
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+
+
+
+        h1 {
+            font-size: 32px;
+            color: var(--verde);
+            margin-bottom: 10px;
+        }
+
+
+
+
+        h1 span {
+            font-size: 40px;
+        }
+
+
+
+
+        .subtitulo {
+            font-size: 16px;
+            color: #777;
+        }
+
+
+
+
+        .info-juego {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 25px;
+            font-size: 18px;
+            flex-wrap: wrap;
+        }
+
+
+
+
+        .puntuacion, .intentos, .encontrados {
+            background: white;
+            padding: 12px 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+
+
+
+        .puntuacion span { color: var(--verde); font-weight: bold; font-size: 22px; }
+        .intentos span { color: var(--azul); font-weight: bold; font-size: 22px; }
+        .encontrados span { color: var(--amarillo); font-weight: bold; font-size: 22px; }
+
+
+
+
+        /* TABLERO */
+        .tablero {
+            max-width: 720px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+
+
+
+        /* TARJETAS */
+        .tarjeta {
+            aspect-ratio: 1 / 1;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+
+
+
+        .tarjeta.volteada {
+            transform: rotateY(180deg);
+        }
+
+
+
+
+        .cara {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backface-visibility: hidden;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+        }
+
+
+
+
+        .trasera {
+            background: linear-gradient(135deg, var(--azul), var(--azul-claro));
+            font-size: 40px;
+        }
+
+
+
+
+        .frente {
+            background: white;
+            border: 3px solid var(--amarillo);
+            transform: rotateY(180deg);
+            flex-direction: column;
+            padding: 8px;
+        }
+
+
+
+
+        .emoji {
+            font-size: 48px;
+            margin-bottom: 5px;
+        }
+
+
+
+
+        .palabra {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--azul);
+            text-align: center;
+        }
+
+
+
+
+        .tarjeta.acertada .frente {
+            background: #E8FFE8;
+            border-color: var(--verde);
+        }
+
+
+
+
+        /* BOTONES */
+        .contenedor-boton {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+
+
+
+        .boton {
+            background: var(--verde);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            font-size: 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 0 var(--verde-oscuro);
+            transition: all 0.1s;
+        }
+
+
+
+
+        .boton:active {
+            transform: translateY(4px);
+            box-shadow: none;
+        }
+
+
+
+
+        /* MENSAJE FINAL */
+        .mensaje-final {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+            text-align: center;
+            z-index: 100;
+            display: none;
+        }
+
+
+
+
+        .mensaje-final h2 {
+            font-size: 28px;
+            color: var(--verde);
+            margin-bottom: 15px;
+        }
+
+
+
+
+        .mensaje-final p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+
+
+
+        .oculto {
+            display: none !important;
+        }
+
+
+
+
+        /* Responsivo */
+        @media (max-width: 600px) {
+            .tablero {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .emoji {
+                font-size: 36px;
+            }
+            .palabra {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+    <header>
+        <h1><span>🦉</span> Otolingo</h1>
+        <p class="subtitulo">¡Encuentra las parejas! Une la imagen con su palabra en Otomí</p>
+    </header>
+
+
+
+
+    <div class="info-juego">
+        <div class="puntuacion">🏆 Puntos: <span id="puntos">0</span></div>
+        <div class="intentos">🎯 Intentos: <span id="intentos">0</span></div>
+        <div class="encontrados">✨ Parejas: <span id="encontrados">0</span>/8</div>
+    </div>
+
+
+
+
+    <div class="tablero" id="tablero"></div>
+
+
+
+
+    <div class="contenedor-boton">
+        <button class="boton" onclick="reiniciarJuego()">🔄 Reiniciar Juego</button>
+    </div>
+
+
+
+
+    <!-- MENSAJE FINAL -->
+    <div class="mensaje-final" id="mensajeFinal">
+        <h2>🎉 ¡Felicidades!</h2>
+        <p>Has encontrado todas las parejas en <strong id="totalIntentos">0</strong> intentos</p>
+        <p>Puntuación final: <strong id="puntosFinal">0</strong> puntos</p>
+        <button class="boton" onclick="cerrarMensaje(); reiniciarJuego();">¡Jugar otra vez!</button>
+    </div>
+
+
+
+
+    <script>
+        // ==========================================
+        // BASE DE DATOS: IMAGEN ↔ PALABRA EN OTOMÍ
+        // ==========================================
+      const parejas = [
+            { imagen: "🐕", palabra: "F'yo", nombre: "Perro" },
+            { imagen: "🐱", palabra: "Mixtu", nombre: "Gato" },
+            { imagen: "🏠", palabra: "Nguu", nombre: "Casa" },
+            { imagen: "💧", palabra: "Deje", nombre: "Agua" },
+            { imagen: "🌽", palabra: "dethä", nombre: "Maíz" },
+            { imagen: "☀️", palabra: "Jädi", nombre: "Sol" },
+            { imagen: "🌙", palabra: "Zänä", nombre: "Luna" },
+            { imagen: "👋", palabra: "Jaxia", nombre: "Hola" }
+        ];
+
+
+
+
+
+
+        // ==========================================
+        // VARIABLES DEL JUEGO
+        // ==========================================
+        let puntos = 0;
+        let intentos = 0;
+        let parejasEncontradas = 0;
+        let tarjetasVolteadas = [];
+        let bloqueado = false;
+
+
+
+
+        // ==========================================
+        // INICIAR JUEGO
+        // ==========================================
+        function iniciarJuego() {
+            puntos = 0;
+            intentos = 0;
+            parejasEncontradas = 0;
+            tarjetasVolteadas = [];
+            bloqueado = false;
+           
+            actualizarPuntuacion();
+            generarTarjetas();
+        }
+
+
+
+
+        // ==========================================
+        // MEZCLAR ARRAY
+        // ==========================================
+        function mezclar(array) {
+            return array.slice().sort(() => Math.random() - 0.5);
+        }
+
+
+
+
+        // ==========================================
+        // GENERAR TARJETAS
+        // ==========================================
+        function generarTarjetas() {
+            const tablero = document.getElementById('tablero');
+            tablero.innerHTML = "";
+
+
+
+
+            // Crear pares: una tarjeta con IMAGEN y otra con la PALABRA en Otomí
+            let tarjetas = [];
+            parejas.forEach((par, indice) => {
+                // Tarjeta con imagen
+                tarjetas.push({ tipo: "imagen", contenido: par.imagen, parId: indice });
+                // Tarjeta con palabra en Otomí
+                tarjetas.push({ tipo: "palabra", contenido: par.palabra, parId: indice });
+            });
+
+
+
+
+            // Mezclar las tarjetas
+            tarjetas = mezclar(tarjetas);
+
+
+
+
+            // Crear cada tarjeta en el HTML
+            tarjetas.forEach((datos) => {
+                const tarjeta = document.createElement('div');
+                tarjeta.className = 'tarjeta';
+                tarjeta.dataset.parId = datos.parId;
+                tarjeta.dataset.tipo = datos.tipo;
+               
+                if (datos.tipo === "imagen") {
+                    tarjeta.innerHTML = `
+                        <div class="cara trasera">🦉</div>
+                        <div class="cara frente">
+                            <div class="emoji">${datos.contenido}</div>
+                        </div>
+                    `;
+                } else {
+                    tarjeta.innerHTML = `
+                        <div class="cara trasera">🦉</div>
+                        <div class="cara frente">
+                            <div class="palabra">${datos.contenido}</div>
+                        </div>
+                    `;
+                }
+               
+                tarjeta.onclick = () => voltearTarjeta(tarjeta);
+                tablero.appendChild(tarjeta);
+            });
+        }
+
+
+
+
+        // ==========================================
+        // VOLTEAR TARJETA
+        // ==========================================
+        function voltearTarjeta(tarjeta) {
+            if (bloqueado) return;
+            if (tarjeta.classList.contains('volteada')) return;
+            if (tarjeta.classList.contains('acertada')) return;
+
+
+
+
+            tarjeta.classList.add('volteada');
+            tarjetasVolteadas.push(tarjeta);
+
+
+
+
+            if (tarjetasVolteadas.length === 2) {
+                intentos++;
+                actualizarPuntuacion();
+                comprobarPareja();
+            }
+        }
+
+
+
+
+        // ==========================================
+        // COMPROBAR SI SON PAREJA
+        // ==========================================
+        function comprobarPareja() {
+            bloqueado = true;
+            const t1 = tarjetasVolteadas[0];
+            const t2 = tarjetasVolteadas[1];
+
+
+
+
+            if (t1.dataset.parId === t2.dataset.parId) {
+                // ✅ ¡ENCONTRÓ LA PAREJA!
+                puntos += 10;
+                parejasEncontradas++;
+               
+                setTimeout(() => {
+                    t1.classList.add('acertada');
+                    t2.classList.add('acertada');
+                    t1.style.cursor = "default";
+                    t2.style.cursor = "default";
+                    actualizarPuntuacion();
+                   
+                    if (parejasEncontradas === parejas.length) {
+                        setTimeout(mostrarMensajeFinal, 500);
+                    }
+                   
+                    tarjetasVolteadas = [];
+                    bloqueado = false;
+                }, 600);
+               
+            } else {
+                // ❌ NO SON IGUALES
+                setTimeout(() => {
+                    t1.classList.remove('volteada');
+                    t2.classList.remove('volteada');
+                    tarjetasVolteadas = [];
+                    bloqueado = false;
+                }, 1000);
+            }
+        }
+
+
+
+
+        function actualizarPuntuacion() {
+            document.getElementById('puntos').textContent = puntos;
+            document.getElementById('intentos').textContent = intentos;
+            document.getElementById('encontrados').textContent = `${parejasEncontradas}`;
+        }
+
+
+
+
+        function mostrarMensajeFinal() {
+            document.getElementById('totalIntentos').textContent = intentos;
+            document.getElementById('puntosFinal').textContent = puntos;
+            document.getElementById('mensajeFinal').style.display = "block";
+        }
+
+
+
+
+        function cerrarMensaje() {
+            document.getElementById('mensajeFinal').style.display = "none";
+        }
+
+
+
+
+        function reiniciarJuego() {
+            cerrarMensaje();
+            iniciarJuego();
+        }
+
+
+
+
+        window.onload = iniciarJuego;
+    </script>
+</body>
+</html>
